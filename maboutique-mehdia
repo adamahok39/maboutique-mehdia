@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>maboutique.mehdia — Kénitra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose: #f2c3cf;
+    --rose-deep: #dd93a8;
+    --rose-line: #c97f95;
+    --off-white: #f7f2ea;
+    --panel: #fffdf9;
+    --ink: #1c1a17;
+    --concrete: #868075;
+    --line: rgba(28,26,23,0.16);
+    --radius: 2px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *,*::before,*::after{ box-sizing: inherit; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --rose: #c98098;
+      --rose-deep: #e7aabd;
+      --rose-line: #c98098;
+      --off-white: #1a1815;
+      --panel: #221f1b;
+      --ink: #f1ece3;
+      --concrete: #b3aca0;
+      --line: rgba(241,236,227,0.18);
+    }
+  }
+  :root[data-theme="dark"]{
+    --rose: #c98098;
+    --rose-deep: #e7aabd;
+    --rose-line: #c98098;
+    --off-white: #1a1815;
+    --panel: #221f1b;
+    --ink: #f1ece3;
+    --concrete: #b3aca0;
+    --line: rgba(241,236,227,0.18);
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  html,body{ height: 100%; }
+  body{
+    margin: 0;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 45% at 10% 0%, color-mix(in srgb, var(--rose) 45%, transparent), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 95% 30%, color-mix(in srgb, var(--rose) 30%, transparent), transparent 65%),
+      radial-gradient(ellipse 65% 50% at 15% 100%, color-mix(in srgb, var(--rose) 32%, transparent), transparent 60%),
+      var(--off-white);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, "Segoe UI", sans-serif;
+    font-weight: 300;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before{
+    content:"";
+    position: fixed; inset:0; z-index:0; pointer-events:none;
+    background-image: radial-gradient(var(--ink) .55px, transparent .55px);
+    background-size: 20px 20px;
+    opacity: .05;
+  }
+  header.nav, main, footer{ position: relative; z-index: 1; }
+  img, svg{ max-width: 100%; display:block; }
+  a{ color: inherit; }
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  .cross{ position:relative; }
+  .cross::before, .cross::after{
+    content:""; position:absolute; background: var(--ink); opacity:.55;
+  }
+  .cross::before{ width:11px; height:1px; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .cross::after{ width:1px; height:11px; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .ref{
+    font-variant: small-caps;
+    letter-spacing: .06em;
+    font-size: .78rem;
+    color: var(--concrete);
+  }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position: sticky; top: 0; z-index: 20;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--off-white) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px clamp(20px,5vw,56px);
+  }
+  .brand{
+    font-size: 1.05rem; font-weight: 500; letter-spacing: .01em; text-decoration:none;
+    display:flex; align-items:baseline; gap: 6px;
+  }
+  .brand .dot{ color: var(--rose-deep); }
+  nav.links{ display:flex; gap: clamp(18px,3vw,40px); font-size: .92rem; }
+  nav.links a{ text-decoration:none; position:relative; padding-bottom:2px; }
+  nav.links a:hover{ color: var(--rose-deep); }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--line); padding:8px 10px; font-size:.85rem; cursor:pointer; color:var(--ink); border-radius:var(--radius); }
+  @media (max-width: 720px){
+    nav.links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; background:var(--panel);
+      border-bottom:1px solid var(--line);
+      padding: 18px clamp(20px,5vw,56px) 24px;
+      display:none;
+      gap: 16px;
+    }
+    nav.links.open{ display:flex; }
+    .nav-toggle{ display:inline-block; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid; grid-template-columns: 1.1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    min-height: 560px;
+  }
+  @media (max-width: 860px){ .hero{ grid-template-columns: 1fr; min-height:auto; } }
+  .hero-panel{ position:relative; padding: clamp(40px,6vw,72px) clamp(24px,5vw,56px); }
+  .hero-panel.rose{
+    background: var(--rose);
+    color: var(--ink);
+    display:flex; flex-direction:column; justify-content:space-between;
+    border-right: 1px solid var(--line);
+  }
+  @media (max-width: 860px){ .hero-panel.rose{ border-right:none; border-bottom:1px solid var(--line);} }
+  .hero-mark{
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    font-weight: 300; line-height: .95; letter-spacing: -.01em;
+    margin: 0;
+  }
+  .hero-mark em{ font-style:normal; color: var(--panel); }
+  .hero-meta{ display:flex; justify-content:space-between; align-items:flex-end; gap:16px; margin-top: 40px; }
+  .hero-meta .ref{ color: var(--ink); opacity:.7; }
+  .hero-panel.paper{ background: var(--off-white); display:flex; flex-direction:column; justify-content:center; gap: 26px; }
+  .hero-tag{ font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight:300; max-width: 30ch; }
+  .hero-desc{ color: var(--concrete); max-width: 42ch; font-size: .98rem; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; width:fit-content;
+    padding: 13px 26px; border: 1px solid var(--ink); background: transparent;
+    color: var(--ink); text-decoration:none; font-size:.92rem; font-weight:500;
+    border-radius: var(--radius); cursor:pointer; font-family:inherit;
+    transition: background .2s ease, color .2s ease;
+  }
+  .btn:hover{ background: var(--ink); color: var(--off-white); }
+  .btn.solid{ background: var(--ink); color: var(--off-white); border-color: var(--ink); }
+  .btn.solid:hover{ background: var(--rose-deep); border-color: var(--rose-deep); color: var(--ink); }
+
+  /* ---------- Liquid glass button ---------- */
+  .btn-glass{
+    position: relative;
+    display: inline-flex; align-items:center; justify-content:center;
+    gap: 10px; width: fit-content;
+    padding: 15px 32px;
+    border-radius: 999px;
+    font-family: inherit; font-weight: 500; font-size: .93rem;
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    isolation: isolate;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-glass:hover{ transform: scale(1.045); }
+  .btn-glass:active{ transform: scale(.98); }
+  .btn-glass::before{
+    content:""; position:absolute; inset:0; z-index:-2; border-radius: inherit;
+    backdrop-filter: blur(6px) url(#glass-distortion);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .btn-glass::after{
+    content:""; position:absolute; inset:0; z-index:-1; border-radius: inherit;
+    background: color-mix(in srgb, var(--panel) 45%, transparent);
+    border: 1px solid color-mix(in srgb, var(--panel) 70%, transparent);
+    box-shadow:
+      inset 1px 1px 1px -0.5px rgba(255,255,255,.75),
+      inset -1px -1px 1px -0.5px rgba(28,26,23,.18),
+      inset 0 0 8px 8px rgba(255,255,255,.12),
+      0 6px 18px rgba(28,26,23,.14);
+  }
+  @media (prefers-reduced-motion: reduce){ .btn-glass{ transition:none; } }
+  @media (prefers-reduced-motion: no-preference){
+    .hero-mark, .hero-tag, .hero-desc, .hero .btn{
+      animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
+    }
+    .hero-tag{ animation-delay: .08s; }
+    .hero-desc{ animation-delay: .16s; }
+    .hero .btn{ animation-delay: .24s; }
+    @keyframes rise{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform:none; } }
+  }
+
+  /* ---------- Section headers ---------- */
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap: 20px; padding: 56px 0 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+  .section-head h2{ font-size: clamp(1.5rem,2.6vw,2.1rem); font-weight:300; margin:0; }
+  .section-head .ref{ text-align:right; }
+
+  /* ---------- About ---------- */
+  .about{
+    display:grid; grid-template-columns: .85fr 1.15fr; gap: 52px; align-items:center;
+    padding: 60px 0 68px; border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 780px){ .about{ grid-template-columns: 1fr; } }
+  .about-visual{
+    position:relative; background: var(--rose); min-height: 340px;
+    display:flex; align-items:center; justify-content:center; padding: 28px;
+  }
+  .about-visual svg{ width: 62%; }
+  .about-visual .corner{ position:absolute; width:14px; height:14px; }
+  .about-visual .corner.tl{ top:10px; left:10px; border-top:1px solid var(--ink); border-left:1px solid var(--ink); opacity:.5; }
+  .about-visual .corner.br{ bottom:10px; right:10px; border-bottom:1px solid var(--ink); border-right:1px solid var(--ink); opacity:.5; }
+  .about-text .ref{ display:block; margin-bottom: 10px; }
+  .about-text h2{ font-size: clamp(1.5rem,2.6vw,2.1rem); font-weight:300; margin: 0 0 18px; }
+  .about-text p{ color: var(--concrete); max-width: 54ch; margin: 0 0 14px; font-size: .98rem; }
+  .about-text p.lead{ color: var(--ink); font-size: 1.05rem; }
+  .about-sign{ margin-top: 18px; font-variant: small-caps; letter-spacing: .05em; font-size: .88rem; color: var(--ink); }
+
+  /* ---------- Collection grid ---------- */
+  .grid4{
+    display:grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 72px;
+  }
+  @media (max-width: 900px){ .grid4{ grid-template-columns: repeat(2,1fr);} }
+  @media (max-width: 480px){ .grid4{ grid-template-columns: 1fr;} }
+  .card{
+    background: var(--panel); padding: 22px 22px 24px;
+    display:flex; flex-direction:column; gap: 14px;
+    transition: transform .2s ease;
+    cursor: pointer;
+  }
+  .card:hover{ transform: translateY(-3px); }
+  .card:focus-visible{ outline: 2px solid var(--rose-deep); outline-offset: -2px; }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .shot{
+    position:relative; height: 210px; display:flex; align-items:flex-end; justify-content:center;
+    overflow:hidden; border: 1px solid var(--line);
+  }
+  .shot svg{ width: 68%; height: 92%; position:relative; z-index:1; }
+  .shot::after{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(ellipse 90% 60% at 50% 100%, rgba(0,0,0,.14), transparent 70%);
+  }
+  .shot-1{ background: linear-gradient(160deg, #f6dde3, #f2c3cf 70%); }
+  .shot-2{ background: linear-gradient(160deg, var(--off-white), #ecd9de 80%); }
+  .shot-3{ background: linear-gradient(160deg, #efe6d8, #e7cdd6 85%); }
+  .shot-4{ background: linear-gradient(160deg, #ddc7ce, #c9a3b0 85%); }
+  .card h3{ font-size: 1.02rem; font-weight:500; margin: 4px 0 0; }
+  .card p.spec{ color: var(--concrete); font-size: .86rem; margin:0; }
+  .card .price{ margin-top:auto; padding-top:10px; font-size:.95rem; display:flex; justify-content:space-between; border-top:1px solid var(--line); }
+
+  /* ---------- Avis clients ---------- */
+  .avis{ padding: 12px 0 70px; }
+  .avis-grid{
+    display:grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line);
+  }
+  @media (max-width: 860px){ .avis-grid{ grid-template-columns: 1fr; } }
+  .avis-card{ background: var(--panel); padding: 26px 24px; display:flex; flex-direction:column; gap: 16px; }
+  .avis-marks{ display:flex; gap: 5px; }
+  .avis-marks span{
+    width:8px; height:8px; background: var(--ink); opacity:.15;
+    transform: rotate(45deg);
+  }
+  .avis-marks span.on{ opacity: .85; background: var(--rose-deep); }
+  .avis-quote{ font-size: .98rem; margin: 0; color: var(--ink); }
+  .avis-who{ display:flex; align-items:center; gap: 12px; margin-top:auto; padding-top: 14px; border-top: 1px solid var(--line); }
+  .avis-avatar{
+    width: 36px; height: 36px; flex: none; background: var(--rose);
+    display:flex; align-items:center; justify-content:center;
+    font-size: .78rem; font-weight: 500;
+  }
+  .avis-name{ font-size: .88rem; line-height:1.3; }
+  .avis-name .loc{ display:block; color: var(--concrete); font-size: .78rem; }
+
+  /* ---------- Product modal ---------- */
+  .modal-overlay{
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(20,18,16,.55);
+    display: flex; align-items:center; justify-content:center;
+    padding: 20px;
+    padding-top: calc(20px + env(safe-area-inset-top,0px));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom,0px));
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  .modal-overlay.open{ opacity: 1; pointer-events: auto; }
+  .modal-panel{
+    position: relative; width: min(760px, 100%);
+    max-height: 88vh; overflow-y: auto;
+    background: var(--panel); border: 1px solid var(--line);
+    display: grid; grid-template-columns: .9fr 1.1fr;
+    transform: translateY(10px); transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  }
+  .modal-overlay.open .modal-panel{ transform: translateY(0); }
+  @media (max-width: 660px){ .modal-panel{ grid-template-columns: 1fr; } }
+  .modal-close{
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 30px; height: 30px; border: 1px solid var(--line); background: var(--panel);
+    color: var(--ink); font-size: 1rem; line-height: 1; cursor: pointer; border-radius: var(--radius);
+  }
+  .modal-close:hover{ background: var(--rose); }
+  .modal-shot{ min-height: 260px; display:flex; align-items:flex-end; justify-content:center; padding: 30px; position:relative; }
+  .modal-shot svg{ width: 62%; position:relative; z-index:1; }
+  .modal-shot::after{ content:""; position:absolute; inset:0; background: radial-gradient(ellipse 90% 60% at 50% 100%, rgba(0,0,0,.14), transparent 70%); }
+  .modal-shot.shot-1{ background: linear-gradient(160deg, #f6dde3, #f2c3cf 70%); }
+  .modal-shot.shot-2{ background: linear-gradient(160deg, var(--off-white), #ecd9de 80%); }
+  .modal-shot.shot-3{ background: linear-gradient(160deg, #efe6d8, #e7cdd6 85%); }
+  .modal-shot.shot-4{ background: linear-gradient(160deg, #ddc7ce, #c9a3b0 85%); }
+  .modal-body{ padding: 34px 32px; display:flex; flex-direction:column; gap: 18px; }
+  .modal-body .ref{ display:block; }
+  .modal-body h3{ margin: 2px 0 0; font-size: 1.3rem; font-weight: 400; }
+  .modal-body .modal-spec{ color: var(--concrete); font-size: .92rem; margin: -6px 0 0; }
+  .modal-body .modal-price{ font-size: 1.05rem; }
+  .modal-field label{ font-variant: small-caps; letter-spacing: .05em; font-size: .8rem; color: var(--concrete); display:block; margin-bottom: 10px; }
+  .swatches{ display:flex; gap: 10px; align-items:center; }
+  .swatch{
+    width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line);
+    cursor: pointer; position: relative; padding:0;
+  }
+  .swatch.active{ outline: 2px solid var(--ink); outline-offset: 2px; }
+  .modal-selected-color{ font-size: .85rem; color: var(--concrete); margin-left: 4px; }
+  .sizes{ display:flex; gap: 8px; }
+  .size-btn{
+    min-width: 42px; padding: 9px 6px; border: 1px solid var(--line); background: var(--panel);
+    font-family: inherit; font-size: .88rem; cursor: pointer; border-radius: var(--radius); color: var(--ink);
+  }
+  .size-btn.active{ background: var(--ink); color: var(--off-white); border-color: var(--ink); }
+  .modal-confirm{
+    margin-top: 4px; padding: 14px 26px; background: var(--ink); color: var(--off-white);
+    border: none; font-family: inherit; font-weight: 500; font-size: .93rem; cursor: pointer;
+    border-radius: var(--radius); width: fit-content;
+  }
+  .modal-confirm:hover{ background: var(--rose-deep); color: var(--ink); }
+  .modal-note{ font-size: .84rem; color: var(--concrete); min-height: 1.2em; }
+  .modal-note.ok{ color: var(--rose-deep); }
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{
+    background: var(--rose);
+    color: var(--ink);
+    padding: 64px clamp(24px,5vw,56px);
+    display:grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items:center;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  @media (max-width: 780px){ .newsletter{ grid-template-columns:1fr; } }
+  .newsletter h2{ font-size: clamp(1.5rem,3vw,2.1rem); font-weight:300; margin:0 0 10px; }
+  .newsletter p{ margin:0; max-width: 40ch; color: color-mix(in srgb, var(--ink) 78%, transparent); }
+  form.sub{ display:flex; gap: 0; border-bottom: 1.5px solid var(--ink); padding-bottom: 10px; }
+  form.sub input{
+    flex:1; background:none; border:none; outline:none; font-family:inherit;
+    font-size: 1rem; color: var(--ink); font-weight:300; padding: 6px 4px;
+  }
+  form.sub input::placeholder{ color: color-mix(in srgb, var(--ink) 55%, transparent); }
+  form.sub button{
+    background:none; border:none; font-family:inherit; font-weight:500; font-size:.95rem;
+    color: var(--ink); cursor:pointer; padding: 6px 4px; white-space:nowrap;
+  }
+  form.sub button:hover{ color: var(--panel); }
+  .sub-note{ font-size:.8rem; margin-top:10px; color: color-mix(in srgb, var(--ink) 60%, transparent); }
+
+  /* ---------- Contact ---------- */
+  .contact{ padding: 64px 0 30px; display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 780px){ .contact{ grid-template-columns:1fr; } }
+  .contact h2{ font-size: clamp(1.5rem,2.6vw,2rem); font-weight:300; margin: 0 0 22px; }
+  dl.info{ margin:0; display:grid; gap: 18px; }
+  dl.info div{ padding-bottom:14px; border-bottom: 1px solid var(--line); }
+  dl.info dt{ font-variant: small-caps; letter-spacing:.05em; font-size:.78rem; color: var(--concrete); margin-bottom:4px; }
+  dl.info dd{ margin:0; font-size: 1rem; }
+  dl.info a{ text-decoration:none; border-bottom:1px solid var(--rose-line); }
+  dl.info a:hover{ color: var(--rose-deep); }
+  .map-block{
+    border: 1px solid var(--line); background: var(--panel); padding: 24px;
+    display:flex; flex-direction:column; gap:18px; position:relative;
+  }
+  .map-block .corner{ position:absolute; width:14px; height:14px; }
+  .map-block .corner.tl{ top:8px; left:8px; border-top:1px solid var(--ink); border-left:1px solid var(--ink); opacity:.5;}
+  .map-block .corner.br{ bottom:8px; right:8px; border-bottom:1px solid var(--ink); border-right:1px solid var(--ink); opacity:.5;}
+  .map-illustration{ width:100%; height:190px; }
+  .map-address{ font-size:.95rem; }
+  .map-address .ref{ display:block; margin-bottom:6px; }
+  .map-link{ font-size:.88rem; text-decoration:none; border-bottom:1px solid var(--rose-line); width:fit-content; }
+  .map-link:hover{ color: var(--rose-deep); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding: 30px clamp(20px,5vw,56px) calc(30px + env(safe-area-inset-bottom,0px));
+    border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-size:.82rem; color: var(--concrete);
+  }
+  footer .brand{ font-size:.9rem; color: var(--ink); }
+</style>
+</head>
+<body>
+<svg style="position:absolute; width:0; height:0; overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="7" result="turbulence"/>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="46" xChannelSelector="R" yChannelSelector="B" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="3" result="finalBlur"/>
+      <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">maboutique<span class="dot">.</span>mehdia</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="links" id="navLinks">
+      <a href="#apropos">À propos</a>
+      <a href="#collection">Collection</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-panel rose">
+      <p class="hero-mark">La coupe<br>comme <em>structure.</em></p>
+      <div class="hero-meta">
+        <span class="ref">Kénitra — Maroc</span>
+        <span class="ref">Réf. collection 09</span>
+      </div>
+    </div>
+    <div class="hero-panel paper">
+      <p class="hero-tag">Des pièces pensées avec précision, portées avec intention.</p>
+      <p class="hero-desc">maboutique.mehdia assemble des lignes nettes et des matières simples pour la femme qui choisit chaque vêtement comme on choisit un outil : pour ce qu'il fait, pas seulement pour son allure.</p>
+      <a href="#collection" class="btn-glass">Voir la collection</a>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="about" id="apropos">
+      <div class="about-visual">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="34" r="20" stroke="#1c1a17" stroke-width="1.3"/>
+          <path d="M32 190 L36 96 C36 74 46 62 60 62 C74 62 84 74 84 96 L88 190" stroke="#1c1a17" stroke-width="1.3"/>
+          <line x1="60" y1="62" x2="60" y2="190" stroke="#1c1a17" stroke-width=".6" opacity=".35"/>
+        </svg>
+      </div>
+      <div class="about-text">
+        <span class="ref">À propos</span>
+        <h2>Une boutique née à Kénitra</h2>
+        <p class="lead">maboutique.mehdia est un atelier de sélection : chaque pièce est choisie pour sa coupe, sa matière et sa tenue dans le temps, avant sa tendance.</p>
+        <p>Tout est parti d'une idée simple : habiller la femme d'aujourd'hui avec des vêtements pensés comme des objets bien conçus — des lignes précises, des matières qui durent, une allure qui ne demande pas d'effort. Ensembles, robes, jeans et manteaux sont sélectionnés saison après saison directement depuis notre boutique à Kénitra.</p>
+        <p>Chaque cliente qui pousse la porte repart avec une pièce choisie pour elle, pas seulement pour la vitrine.</p>
+        <p class="about-sign">Mehdia — fondatrice</p>
+      </div>
+    </section>
+
+    <section id="collection">
+      <div class="section-head">
+        <h2>La collection</h2>
+        <span class="ref">4 pièces — saison en cours</span>
+      </div>
+
+      <div class="grid4">
+
+        <article class="card" data-name="Ensemble Kénitra" data-ref="Réf. 01" data-spec="Veste structurée &amp; pantalon droit — lin épais" data-price="620 MAD" data-colors="Noir:#1c1a17,Rose poudré:#dd93a8,Blanc cassé:#f7f2ea" tabindex="0" role="button" aria-haspopup="dialog">
+          <div class="card-top"><span class="ref">Réf. 01</span><span class="cross" style="width:16px;height:16px"></span></div>
+          <div class="shot shot-1">
+          <svg viewBox="0 0 120 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="120" height="170" fill="none"/>
+            <path d="M42 20 L34 40 L34 150 L52 150 L52 70 L68 70 L68 150 L86 150 L86 40 L78 20 Z" stroke="#1c1a17" stroke-width="1.2"/>
+            <path d="M42 20 L60 32 L78 20" stroke="#1c1a17" stroke-width="1.2"/>
+            <path d="M34 40 L20 52 L26 62 L34 52" stroke="#1c1a17" stroke-width="1"/>
+            <path d="M86 40 L100 52 L94 62 L86 52" stroke="#1c1a17" stroke-width="1"/>
+            <line x1="52" y1="90" x2="68" y2="90" stroke="#dd93a8" stroke-width="1"/>
+          </svg>
+          </div>
+          <h3>Ensemble Kénitra</h3>
+          <p class="spec">Veste structurée &amp; pantalon droit — lin épais</p>
+          <div class="price"><span>620 MAD</span><span class="ref">Coupe ajustée</span></div>
+        </article>
+
+        <article class="card" data-name="Robe Médina" data-ref="Réf. 02" data-spec="Coupe fluide, fermeture dos — viscose" data-price="480 MAD" data-colors="Rose poudré:#dd93a8,Bordeaux:#7a3348,Blanc cassé:#f7f2ea" tabindex="0" role="button" aria-haspopup="dialog">
+          <div class="card-top"><span class="ref">Réf. 02</span><span class="cross" style="width:16px;height:16px"></span></div>
+          <div class="shot shot-2">
+          <svg viewBox="0 0 120 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 18 L44 34 L28 150 L92 150 L76 34 L70 18 Z" stroke="#1c1a17" stroke-width="1.2"/>
+            <path d="M50 18 L60 30 L70 18" stroke="#1c1a17" stroke-width="1.2"/>
+            <line x1="44" y1="70" x2="76" y2="70" stroke="#dd93a8" stroke-width="1"/>
+            <line x1="40" y1="105" x2="80" y2="105" stroke="#1c1a17" stroke-width=".6" opacity=".4"/>
+          </svg>
+          </div>
+          <h3>Robe Médina</h3>
+          <p class="spec">Coupe fluide, fermeture dos — viscose</p>
+          <div class="price"><span>480 MAD</span><span class="ref">Longue</span></div>
+        </article>
+
+        <article class="card" data-name="Jean droit Owen" data-ref="Réf. 03" data-spec="Taille haute, denim brut — coupe droite" data-price="390 MAD" data-colors="Bleu brut:#3b4a5a,Noir:#1c1a17,Écru:#cbb89a" tabindex="0" role="button" aria-haspopup="dialog">
+          <div class="card-top"><span class="ref">Réf. 03</span><span class="cross" style="width:16px;height:16px"></span></div>
+          <div class="shot shot-3">
+          <svg viewBox="0 0 120 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 18 L38 60 L26 150 L46 150 L58 70 L62 70 L74 150 L94 150 L82 60 L80 18 Z" stroke="#1c1a17" stroke-width="1.2"/>
+            <line x1="40" y1="34" x2="80" y2="34" stroke="#1c1a17" stroke-width="1"/>
+            <line x1="30" y1="100" x2="42" y2="100" stroke="#dd93a8" stroke-width="1"/>
+            <line x1="78" y1="100" x2="90" y2="100" stroke="#dd93a8" stroke-width="1"/>
+          </svg>
+          </div>
+          <h3>Jean droit Owen</h3>
+          <p class="spec">Taille haute, denim brut — coupe droite</p>
+          <div class="price"><span>390 MAD</span><span class="ref">Denim rigide</span></div>
+        </article>
+
+        <article class="card" data-name="Manteau Atlas" data-ref="Réf. 04" data-spec="Laine mélangée, doublure fine — mi-saison" data-price="790 MAD" data-colors="Camel:#a9754a,Noir:#1c1a17,Rose poudré:#dd93a8" tabindex="0" role="button" aria-haspopup="dialog">
+          <div class="card-top"><span class="ref">Réf. 04</span><span class="cross" style="width:16px;height:16px"></span></div>
+          <div class="shot shot-4">
+          <svg viewBox="0 0 120 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38 20 L30 45 L24 150 L48 150 L48 60 L72 60 L72 150 L96 150 L90 45 L82 20 Z" stroke="#1c1a17" stroke-width="1.2"/>
+            <path d="M38 20 L60 34 L82 20" stroke="#1c1a17" stroke-width="1.2"/>
+            <line x1="60" y1="34" x2="60" y2="150" stroke="#1c1a17" stroke-width=".6" opacity=".4"/>
+            <path d="M30 45 L16 58 L22 68 L30 58" stroke="#1c1a17" stroke-width="1"/>
+            <path d="M90 45 L104 58 L98 68 L90 58" stroke="#1c1a17" stroke-width="1"/>
+          </svg>
+          </div>
+          <h3>Manteau Atlas</h3>
+          <p class="spec">Laine mélangée, doublure fine — mi-saison</p>
+          <div class="price"><span>790 MAD</span><span class="ref">Oversize</span></div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="avis" id="avis">
+      <div class="section-head">
+        <h2>Elles en parlent</h2>
+        <span class="ref">Avis vérifiés</span>
+      </div>
+      <div class="avis-grid">
+
+        <article class="avis-card">
+          <div class="avis-marks">
+            <span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span>
+          </div>
+          <p class="avis-quote">L'ensemble Kénitra tombe exactement comme sur les photos. La matière est épaisse, ça ne se froisse pas en une heure comme d'habitude.</p>
+          <div class="avis-who">
+            <div class="avis-avatar">S.B</div>
+            <div class="avis-name">Salma B.<span class="loc">Kénitra</span></div>
+          </div>
+        </article>
+
+        <article class="avis-card">
+          <div class="avis-marks">
+            <span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span>
+          </div>
+          <p class="avis-quote">Le manteau Atlas est devenu mon vêtement d'hiver de référence. Coupe oversize mais bien structurée, rien à voir avec du grand n'importe quoi.</p>
+          <div class="avis-who">
+            <div class="avis-avatar">N.A</div>
+            <div class="avis-name">Nadia A.<span class="loc">Rabat</span></div>
+          </div>
+        </article>
+
+        <article class="avis-card">
+          <div class="avis-marks">
+            <span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span>
+          </div>
+          <p class="avis-quote">J'ai acheté la robe Médina pour un mariage, j'ai reçu trois compliments sur la coupe dos. Livraison rapide en plus.</p>
+          <div class="avis-who">
+            <div class="avis-avatar">I.K</div>
+            <div class="avis-name">Ikram K.<span class="loc">Kénitra</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </div>
+
+  <section class="newsletter" id="newsletter">
+    <div>
+      <h2>Restez informée</h2>
+      <p>Un mail par nouvelle collection, sans surplus. Vous pouvez vous désinscrire à tout moment.</p>
+    </div>
+    <div>
+      <form class="sub" id="subForm">
+        <input type="email" required placeholder="Votre adresse e-mail" aria-label="Adresse e-mail">
+        <button type="submit">S'inscrire</button>
+      </form>
+      <p class="sub-note" id="subNote">Aucune donnée n'est envoyée depuis cette page de démonstration.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="contact" id="contact">
+      <div>
+        <h2>Nous contacter</h2>
+        <dl class="info">
+          <div>
+            <dt>Adresse</dt>
+            <dd>68WV+PRM, Kénitra, Maroc</dd>
+          </div>
+          <div>
+            <dt>Téléphone</dt>
+            <dd><a href="tel:+212XXXXXXXXX">+212 X XX XX XX XX</a></dd>
+          </div>
+          <div>
+            <dt>E-mail</dt>
+            <dd><a href="mailto:contact@maboutique-mehdia.ma">contact@maboutique-mehdia.ma</a></dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/maboutique.mehdia" target="_blank" rel="noopener">@maboutique.mehdia</a></dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="map-block">
+        <span class="corner tl"></span><span class="corner br"></span>
+        <svg class="map-illustration" viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="40" x2="300" y2="40" stroke="#86807580" stroke-width="1"/>
+          <line x1="0" y1="90" x2="300" y2="90" stroke="#86807580" stroke-width="1"/>
+          <line x1="0" y1="140" x2="300" y2="140" stroke="#86807580" stroke-width="1"/>
+          <line x1="70" y1="0" x2="70" y2="190" stroke="#86807580" stroke-width="1"/>
+          <line x1="160" y1="0" x2="160" y2="190" stroke="#86807580" stroke-width="1"/>
+          <line x1="235" y1="0" x2="235" y2="190" stroke="#86807580" stroke-width="1"/>
+          <path d="M150 60 C150 60 120 90 150 130 C180 90 150 60 150 60 Z" fill="#f2c3cf" stroke="#1c1a17" stroke-width="1.3"/>
+          <circle cx="150" cy="88" r="7" fill="none" stroke="#1c1a17" stroke-width="1.3"/>
+        </svg>
+        <div class="map-address">
+          <span class="ref">Localisation</span>
+          68WV+PRM, Route sans nom, Kénitra, Maroc
+        </div>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=68WV%2BPRM+Kenitra+Morocco" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="modal-overlay" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-panel">
+    <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
+    <div class="modal-shot" id="modalShot"></div>
+    <div class="modal-body">
+      <div>
+        <span class="ref" id="modalRef"></span>
+        <h3 id="modalTitle"></h3>
+        <p class="modal-spec" id="modalSpec"></p>
+      </div>
+      <div class="modal-price" id="modalPrice"></div>
+
+      <div class="modal-field">
+        <label>Coloris <span class="modal-selected-color" id="modalSelectedColor"></span></label>
+        <div class="swatches" id="modalColors"></div>
+      </div>
+
+      <div class="modal-field">
+        <label>Taille</label>
+        <div class="sizes" id="modalSizes">
+          <button type="button" class="size-btn" data-size="S">S</button>
+          <button type="button" class="size-btn active" data-size="M">M</button>
+          <button type="button" class="size-btn" data-size="L">L</button>
+          <button type="button" class="size-btn" data-size="XL">XL</button>
+        </div>
+      </div>
+
+      <button type="button" class="modal-confirm" id="modalConfirm">Ajouter au panier</button>
+      <p class="modal-note" id="modalNote"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="brand">maboutique.mehdia</span>
+  <span>Kénitra, Maroc — © 2026</span>
+</footer>
+
+<script>
+  document.getElementById('navToggle')?.addEventListener('click', function(){
+    var links = document.getElementById('navLinks');
+    var open = links.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.getElementById('subForm')?.addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('subNote').textContent = 'Merci, votre inscription est enregistrée pour cette démonstration.';
+    this.reset();
+  });
+
+  (function(){
+    var modal = document.getElementById('productModal');
+    var modalShot = document.getElementById('modalShot');
+    var modalRef = document.getElementById('modalRef');
+    var modalTitle = document.getElementById('modalTitle');
+    var modalSpec = document.getElementById('modalSpec');
+    var modalPrice = document.getElementById('modalPrice');
+    var modalColors = document.getElementById('modalColors');
+    var modalSelectedColor = document.getElementById('modalSelectedColor');
+    var modalSizes = document.getElementById('modalSizes');
+    var modalConfirm = document.getElementById('modalConfirm');
+    var modalNote = document.getElementById('modalNote');
+    var modalClose = document.getElementById('modalClose');
+    var lastFocused = null;
+    var selectedColor = '';
+    var selectedSize = 'M';
+
+    function openModal(card){
+      lastFocused = document.activeElement;
+      var name = card.dataset.name;
+      var ref = card.dataset.ref;
+      var spec = card.dataset.spec;
+      var price = card.dataset.price;
+      var colors = card.dataset.colors.split(',').map(function(c){
+        var parts = c.split(':'); return { name: parts[0], hex: parts[1] };
+      });
+      var shotEl = card.querySelector('.shot');
+      var shotClass = '';
+      if (shotEl){
+        shotEl.classList.forEach(function(c){ if (c.indexOf('shot-') === 0) shotClass = c; });
+      }
+      modalShot.className = 'modal-shot ' + shotClass;
+      modalShot.innerHTML = shotEl ? shotEl.querySelector('svg').outerHTML : '';
+      modalRef.textContent = ref;
+      modalTitle.textContent = name;
+      modalSpec.textContent = spec;
+      modalPrice.textContent = price;
+
+      modalColors.innerHTML = '';
+      colors.forEach(function(c, i){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'swatch' + (i === 0 ? ' active' : '');
+        btn.style.background = c.hex;
+        btn.title = c.name;
+        btn.setAttribute('aria-label', c.name);
+        btn.addEventListener('click', function(){
+          modalColors.querySelectorAll('.swatch').forEach(function(s){ s.classList.remove('active'); });
+          btn.classList.add('active');
+          selectedColor = c.name;
+          modalSelectedColor.textContent = c.name;
+        });
+        modalColors.appendChild(btn);
+      });
+      selectedColor = colors[0].name;
+      modalSelectedColor.textContent = selectedColor;
+
+      modalSizes.querySelectorAll('.size-btn').forEach(function(b){
+        b.classList.toggle('active', b.dataset.size === 'M');
+      });
+      selectedSize = 'M';
+
+      modalNote.textContent = '';
+      modalNote.classList.remove('ok');
+      modalConfirm.textContent = 'Ajouter au panier';
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.card').forEach(function(card){
+      card.addEventListener('click', function(){ openModal(card); });
+      card.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(card); }
+      });
+    });
+
+    modalSizes.querySelectorAll('.size-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        modalSizes.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        selectedSize = btn.dataset.size;
+      });
+    });
+
+    modalConfirm.addEventListener('click', function(){
+      modalNote.textContent = 'Ajouté — ' + modalTitle.textContent + ', taille ' + selectedSize + ', coloris ' + selectedColor + '.';
+      modalNote.classList.add('ok');
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  })();
+</script>
+
+</body>
+</html>
